@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>积分查询系统</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>积分查询系统</h1>
+        <form id="studentForm" action="/student" method="post">
+            <label for="student_id">请输入学号：</label>
+            <input type="text" id="student_id" name="student_id" required>
+            <button type="submit">查询</button>
+        </form>
+        <div class="loader" id="loader"></div>
+        {% if student_data %}
+        <div class="result">
+            <h2>查询结果</h2>
+            {% for key, value in student_data.items() %}
+                <p><strong>{{ key }}:</strong> {{ value }}</p>
+            {% endfor %}
+        </div>
+        {% elif error %}
+        <div class="error">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        document.getElementById('studentForm').addEventListener('submit', function() {
+            document.getElementById('loader').style.display = 'block';
+            this.querySelector('button[type="submit"]').disabled = true;
+        });
+    </script>
+</body>
+</html>
